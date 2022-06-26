@@ -1,0 +1,19 @@
+Package: precondition
+Title: Lightweight precondition, postcondition and sanity checks (aka. assertions) for R 
+Version: 0.0.0.9000
+Authors@R: 
+    person("Taras", "Zakharko", , "taras.zakharko@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-7601-8424"))
+Description: This package offers a range of assertion routines with focus on 
+    performance, safety and advanced diagnostics support. These routines can be 
+    used as a drop-in replacements for `base::stopifnot()`.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
+Suggests: 
+    cli,
+    rlang,
+    pillar,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
