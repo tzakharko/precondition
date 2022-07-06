@@ -9,6 +9,7 @@ test_that("precondition() works", {
   }
 
   expect_silent(fun(10L))
+  expect_silent(fun(seq_len(10L)))
   expect_error(fun(10.0))
   expect_error(fun(-1L))
 })
@@ -22,6 +23,7 @@ test_that("postcondition() works", {
   }
 
   expect_silent(fun(10))
+  expect_silent(fun(c(1, 2, 3)))
   expect_error(fun(0))
 })
 
@@ -33,12 +35,13 @@ test_that("sanity_check() works", {
   }
 
   expect_silent(fun(10))
+  expect_silent(fun(c(1, 2, 3)))
   capture.output(expect_error(fun(0)))
 })
 
 test_that("assertion message works in precondition()", {
   fun <- function(x) {
-    precondition("x must be a positive int", is.integer(x), x > 0L)
+    precondition("x must be a positive int" = is.integer(x), x > 0L)
 
     x
   }
@@ -61,7 +64,7 @@ test_that("assertion message works in postcondition()", {
 
 test_that("assertion message works in sanity_check()", {
   fun <- function(x) {
-    sanity_check("x must be positive", x > 0)
+    sanity_check("x must be positive" = x > 0)
 
     x
   }
@@ -73,7 +76,7 @@ test_that("assertion message works in sanity_check()", {
 
 test_that("embracing works in precondition()", {
   fun <- function(x) {
-    precondition("x must be a positive int", is.integer({{x}}), {{x}} > 0L)
+    precondition("x must be a positive int" = is.integer({{x}}), {{x}} > 0L)
 
     x
   }
@@ -85,7 +88,7 @@ test_that("embracing works in precondition()", {
 
 test_that("embracing works in sanity_check()", {
   fun <- function(x) {
-    sanity_check("x must be positive", {{x}} > 0)
+    sanity_check("x must be positive" = {{x}} > 0)
 
     x
   }

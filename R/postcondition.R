@@ -20,8 +20,7 @@ postcondition <- function(..., .env = parent.frame()) {
 
     # report the error
     error_msg <- c(
-      extract_assertion_message(..., default = "postcondition failure"),
-      diagnose_failed_conditions(.env, embraced_exprs, ...)
+      diagnose_failed_conditions("postcondition failure", .env, embraced_exprs, ...)
     )
 
     # install and execute the error call (this will create cleaner trace)

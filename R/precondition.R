@@ -100,8 +100,7 @@ precondition <- function(..., .env = parent.frame()) {
 
   # report the error
   error_msg <- c(
-    extract_assertion_message(..., default = "precondition failure"),
-    diagnose_failed_conditions(.env, list(), ...)
+    diagnose_failed_conditions("precondition failure", .env, list(), ...)
   )
 
   # install and execute the error call (this will create cleaner trace)
