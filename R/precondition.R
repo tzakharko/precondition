@@ -99,10 +99,7 @@ precondition <- function(..., .env = parent.frame()) {
   if(.External2(ffi_check_conditions)) return(invisible(TRUE))
 
   # report the error
-  error_msg <- c(
-    extract_assertion_message(..., default = "precondition failure"),
-    diagnose_failed_conditions(.env, list(), ...)
-  )
+  error_msg <- diagnose_failed_conditions("precondition failure", .env, list(), ...)
 
   # install and execute the error call (this will create cleaner trace)
   error_call <- make_error_call(error_msg, .env)

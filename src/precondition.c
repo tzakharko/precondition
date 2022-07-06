@@ -21,17 +21,14 @@ SEXP ffi_check_conditions(SEXP call, SEXP op, SEXP args, SEXP env) {
   SEXP dots = Rf_findVar(R_DotsSymbol, env);
   int error = 0;
 
-  // skip the optional initial character literal argument
-  if(IS_SCALAR(substitute_promise(CAR(dots)), STRSXP)) {
-    dots = CDR(dots);
-  }
+  for(; dots != R_NilValue; dots = CDR(dots)) {
+    SEXP check = CAR(dots);
 
-  while(dots != R_NilValue) {
-    SEXP condition = CAR(dots);
-    dots = CDR(dots);
-
+    // skip the optional assertion message
+    if(IS_SCALAR(substitute_promise(check), STRSXP)) continue;
+    
     // evaluate the condition and check if it is TRUE
-    SEXP r = R_tryEvalSilent(condition, R_EmptyEnv, &error);
+    SEXP r = R_tryEvalSilent(check, R_EmptyEnv, &error);
     if(!(error == 0 && IS_SCALAR(r, LGLSXP) && LOGICAL(r)[0])) {
       return Rf_ScalarLogical(0);
     }

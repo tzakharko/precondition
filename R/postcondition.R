@@ -19,10 +19,7 @@ postcondition <- function(..., .env = parent.frame()) {
     if(isTRUE(.shared$suppress_postcondition_diagnostics)) return()
 
     # report the error
-    error_msg <- c(
-      extract_assertion_message(..., default = "postcondition failure"),
-      diagnose_failed_conditions(.env, embraced_exprs, ...)
-    )
+    error_msg <- diagnose_failed_conditions("postcondition failure", .env, embraced_exprs, ...)
 
     # install and execute the error call (this will create cleaner trace)
     error_call <- make_error_call(error_msg, .env)

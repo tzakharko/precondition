@@ -12,8 +12,7 @@ sanity_check <- function(..., .env = parent.frame()) {
   }
 
   error_msg <- c(
-    extract_assertion_message(..., default = "assertion failure"),
-    diagnose_failed_conditions(.env, list(), ...),
+    diagnose_failed_conditions("assertion failure", .env, list(), ...),
     "i" = sprintf("Failed an internal sanity check%s", ctx),
     "i" = "Please consider submitting a bug report"
   )
