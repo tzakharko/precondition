@@ -29,7 +29,7 @@ SEXP ffi_check_conditions(SEXP call, SEXP op, SEXP args, SEXP env) {
     
     // evaluate the condition and check if it is TRUE
     SEXP r = R_tryEvalSilent(check, R_EmptyEnv, &error);
-    if(!(error == 0 && IS_SCALAR(r, LGLSXP) && LOGICAL(r)[0])) {
+    if(!(error == 0 && IS_SCALAR(r, LGLSXP) && LOGICAL(r)[0] == 1)) {
       return Rf_ScalarLogical(0);
     }
   }
