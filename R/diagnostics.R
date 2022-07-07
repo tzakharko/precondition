@@ -17,7 +17,12 @@ diagnose_failed_conditions <- function(default_message, .env, embraced_exprs, ..
     }
 
     # check the condition
-    if(suppressWarnings(check_conditions(...elt(i)))) next
+    check_error <- NULL
+    check_result <- suppressWarnings(tryCatch(...elt(i), error = function(error) {
+      check_error <<- error
+      NULL
+    }))
+    if(identical(check_result, TRUE)) next
 
     # record and strip embraced subexpressions
     condition_expr <- deembrace(conditions[[i]], function(expr) {
@@ -49,15 +54,32 @@ diagnose_failed_conditions <- function(default_message, .env, embraced_exprs, ..
     if(length(details) > 0L) details <- c("", details)
     names(details) <- rep(" ", length(details))
 
+    # diagnose the check result
+    additional_diagnostics <- if(!is.null(check_error)) {
+      "note: error occured when evaluating the condition"
+    } else 
+    if(is.atomic(check_result) && length(check_result) > 0L && all(is.na(check_result))) {
+      "note: condition should produce a scalar TRUE or FALSE (NA found)"
+    } else 
+    if(!is.object(check_result) && is.logical(check_result) && length(check_result) > 1L) {
+      "note: condition should produce a scalar TRUE or FALSE (logical vector found)"
+    } else 
+    if(!identical(check_result, FALSE)) {
+      "note: condition should produce a scalar TRUE or FALSE"
+    } else {
+      character(0)
+    }
+
     # return the diagnostics
     if(is.null(assertion_message) || grepl("^\\s*$", assertion_message)) {
       assertion_message <- default_message
     }
     diagnostics <- c(
       assertion_message,
-      "!" = paste(format_expr(condition_expr), "is not TRUE"),
+      " " = paste(format_expr(condition_expr), "is not TRUE"),
       details,
-      ""
+      "",
+      "i" = additional_diagnostics
     )
 
     return(diagnostics)

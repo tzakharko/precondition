@@ -4,7 +4,7 @@
       fun(10)
     Error <rlang_error>
       x must be a positive int
-      ! `is.integer(x)` is not TRUE
+        `is.integer(x)` is not TRUE
 
 ---
 
@@ -12,7 +12,7 @@
       fun(0L)
     Error <rlang_error>
       x must be a positive int
-      ! `x > 0L` is not TRUE
+        `x > 0L` is not TRUE
 
 # assertion message works in postcondition()
 
@@ -20,7 +20,7 @@
       fun(0L)
     Error <rlang_error>
       postcondition failure
-      ! `.value. > 0` is not TRUE
+        `.value. > 0` is not TRUE
         
         `.value.` = int 0L
 
@@ -31,7 +31,7 @@
     Output
       Fatal error:
       ! x must be positive
-      ! `x > 0` is not TRUE
+        `x > 0` is not TRUE
       
       i Failed an internal sanity check in package `precondition`
       i Please consider submitting a bug report
@@ -48,7 +48,7 @@
       fun(10)
     Error <rlang_error>
       x must be a positive int
-      ! `is.integer(x)` is not TRUE
+        `is.integer(x)` is not TRUE
         
         `x` = dbl 10
 
@@ -58,7 +58,7 @@
       fun(0L)
     Error <rlang_error>
       x must be a positive int
-      ! `x > 0L` is not TRUE
+        `x > 0L` is not TRUE
         
         `x` = int 0L
 
@@ -69,7 +69,7 @@
     Output
       Fatal error:
       ! x must be positive
-      ! `x > 0` is not TRUE
+        `x > 0` is not TRUE
         
         `x` = int 0L
       
