@@ -4,19 +4,19 @@
 #'
 #' `fatal_error()` is similar to [base::stop], except it bypasses
 #' the error handling mechanism and will always immediately terminate
-#' the program. Use this function to report critical execution errors, 
-#' where recovery is impossible or unfeasible. 
+#' the program. Use this function to report critical execution errors,
+#' where recovery is impossible or unfeasible.
 #'
 #' @param message the character vector containing the error message, 
 #'                can be formatted in the style of [rlang::format_error_bullets](
 #'                https://rlang.r-lib.org/reference/format_error_bullets.html)
 #'
-#' @param call    either a function call or a call frame in which the error 
+#' @param call    either a function call or a call frame in which the error
 #'                has occured
 #'
 #' @details
 #'
-#' In the interactive mode, `fatal_error()` will exit to the interpreter prompt. 
+#' In the interactive mode, `fatal_error()` will exit to the interpreter prompt.
 #' In a script, it will terminate execution using [base::quit]
 #'
 #' `fatal_error()` is used by [sanity_check] to immediately terminate execution
@@ -40,7 +40,7 @@ fatal_error <- function(message, call = parent.frame()) {
     if(has_rlang()) rlang::warn(msg) else warning(msg)
   }
 
-  # -- print the error message and terminate 
+  # -- print the error message and terminate
 
   # format the prefix
   prefix <- format_error_prefix("Fatal error", call)
@@ -66,7 +66,7 @@ fatal_error <- function(message, call = parent.frame()) {
   message <- paste0(message, collapse = "\n")
 
   writeLines(message, con = if(is_testing()) stdout() else stderr())
-  
+
   # abort execution
   if(interactive()) {
     evalq(return(), .GlobalEnv)

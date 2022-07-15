@@ -5,7 +5,7 @@
 \alias{postcondition}
 \alias{precondition}
 \alias{sanity_check}
-\title{Pre- and postcondition checking}
+\title{Assertion predicates}
 \usage{
 postcondition(..., .env = parent.frame())
 
@@ -14,75 +14,82 @@ precondition(..., .env = parent.frame())
 sanity_check(..., .env = parent.frame())
 }
 \arguments{
-\item{...}{one or more assertion expression to check. The first argument can also
-optionally be a string literal containing an informative assertion
-message}
+\item{...}{one or more assertion expressions to check. Each of these should
+evaluate to scalar \code{TRUE}. String literals can be used to provide
+informative messages to show on failure (see examples).}
 
-\item{.env}{the call frame of the function being tested}
+\item{.env}{the call frame of the function where the assertion check is performed,
+for advanced use only.}
 }
 \description{
-The assertion predicates described here are equivalent to the base R
-function \code{\link[base:stopifnot]{base::stopifnot()}}, but offer better diagnostics and safer
-behavior.
+The assertion predicates described here are similar in function to base R
+\code{\link[base:stopifnot]{base::stopifnot()}}, but offer improved diagnostics and safer behavior.
 \itemize{
-\item \code{precondition()} specifies an assertion expression and fails with
-a diagnostic error if it does not evaluate to \code{TRUE}. Use this function
-to validate inputs such as function arguments against code invariants.
-\item \code{postcondition()} specifies an assertion expression to be evaluated after
-the calling successfully exits. The execution with fail with a diagnostic
-error if the assertion does not evaluate to \code{TRUE}. A special pronoun \code{.value.}
-can be used in the assertion expression to validate the function return value.
-Use this predicate to check that the function has produced a well-formed result
-or behavior.
-\item \code{sanity_check()} specifies an assertion expression and immediately terminates
-with a fatal error if it does not evaluate to \code{TRUE}. Use this predicate to
-validate critical internal assumptions your code relies upon. Failing a sanity
-check means that your program contains a serious error and cannot reasonably
-continue execution.
+\item \code{precondition()} will immediately evaluate it's arguments and fail if
+any of them do not evaluate to \code{TRUE}. Use this predicate to check
+code contracts such as validating function inputs or other state required
+to proceed correctly.
+\item \code{postcondition()} will evaluate it's arguments \emph{after} the caller function
+successfully returns, at which point it will fail if any of them
+do not evaluate to \code{TRUE}. Special pronoun \code{.value.} can be used in the
+assertion expression to refer to the value returned by the caller. Use this
+predicate to check that your function will have produced well-formed result
+or state.
+\item \code{sanity_check()} will immediately evaluate it's arguments and fail if any
+of them do not evaluate to \code{TRUE}. This failure will result in immediate
+program termination and cannot be processed with the usual R error handling
+mechanisms. Use this predicate to guard your code agains potential bugs.
+Failing a sanity check means that the program contains a serious error and
+cannot continue execution.
 }
 
-To facilitate debugging, principal parts of the assertion expression can be
-embraced using a pair of braces (e.g. \code{{{x}} > 0}). On assertion failure, the values
-marked in this way will be displayed in the diagnostic message, making it easier
-to understand why the assertion has failed.
+To aid debugging, you can wrap principal values inside assertions using a pair
+of braces (e.g. \code{{{x}} > 0}). On assertion failure, values embraced in this way
+will be printed out in the diagnostic message, making it easier to track the
+problem.
 
-Under certain circumstances these predicates might evaluate the assertion expression
-multiple times. Beware of combining them with side effects.
+Under certain circumstances these predicates might evaluate their arguments
+more then once. Be wary of combining them with side effects.
 }
 \details{
 \itemize{
-\item A precondition is an assertion that specifies a set of conditions that must be true
-in order for the execution to proceed in a meaningful way. This is usually
+\item A precondition is an assertion that specifies a set of conditions which must be
+true in order for the execution to proceed in a meaningful way. This is usually
 conditioned on the user input or environment in some way. A postcondition is an
-assertion that must be true if a function has executed in a meaningful way. Pre- and
-postconditions explicitly state the contract of a function and make it easier to
-debug correct function usage.
-\item A sanity check is an assertion that specifies a set of conditions that the program
-implicitly assumes to be true. A sanity check failure means that the core logic
-of the program is broken and error recovery is either impossible or not meaningful.
-Sanity checks are used to test the internal logic of your code and will result
-in an immediate program termination if failed (via \link{fatal_error}).
-\item The first argument of any assertion predicate can be a string literal constant
-with an informative message, e.g. \code{sanity_check("x is not NULL", !is.null(x))}.
-Note that this message \emph{must} be a string literal, you cannot compute it or
-use a variable. The following will not work correctly:
+assertion that must be true if a function has executed correctly. Pre- and
+postconditions should be used to check whether a function correctly interfaces
+with the rest of the program.
+\item A sanity check (invariant check) is an assertion that specifies a set of conditions
+which the program inplicitly assumes to be true. A sanity check failure means
+that the core logic of the program is faulty and that error recovery is either
+not possible or not meaningful. Sanity checks should be used to test the internal
+logic of your code and guard agains potential bugs. A sanify check failure will
+result in the immediate program termination (via \link{fatal_error}).
+\item Arguments of assertion predicates can be string literals (constants) that provide
+an informative message, e.g. \code{sanity_check("x is not NULL", !is.null(x))}. This
+message will be shown in case of an assertion failure. If multiple such mesages
+are provided, the last oen preceding the failed contition will be shown.
+
+Note that the message \emph{must} be a literal, the following will not work:
 `sanity_check(paste0("x is not", "NULL"), !is.null(x)).
-\item Values inside the assertion expression can be embraced using the \verb{\{\{} operator,
-which will cause for them to be displayed on assertion error. E.g.
-\code{precondition({{x}} > 0)} will print the value of \code{x} on precondition failure.
+\item Values inside an assertion expression can be embraced using the \verb{\{\{} operator,
+which will cause for them to be printed out on assertion error. For example,
+\code{precondition({{x}} > 0)} will print the value of \code{x} on assertion failure.
 The idea of \verb{\{\{} operator is borrowed from tidyverse where it is used to forward
 arguments from one function to another without breaking the custom evaluation
 mechanism that tidyverse packages rely on (see \link[rlang:embrace-operator]{rlang::embrace-operator} for
 details). We extend this operator to mean forwarding in more generic sense,
 as in "take the value of the embraced value here". This gives us an ergonomic way to
 empathize important values while retaining conceptual compatibility with popular
-frameworks.
+frameworks. Note that the assertion predicates in \code{precondition} package themselves
+do not perform any non-standard evaluaton.
 \item \code{postcondition(check)} is equivalent to \code{on.exit(stopifnot(check))}, except that the
 postcondition will not report an error if there already was an error during function
 execution.
 }
 }
 \examples{
+
 # These examples are guarded to avoid throwing errors
 if (FALSE) {
 

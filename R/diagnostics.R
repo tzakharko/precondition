@@ -1,6 +1,6 @@
-# Perform diagnostics on failed conditions and produce a pretty-printed summary
+# Perform diagnostics on failed conditions and produce a formatted summary
 #
-# The returned diagnostics specify the failed condition as well as the values 
+# The returned diagnostics specify the failed condition as well as the values
 # for the embraced expressions (if any) to facilitate debugging
 diagnose_failed_conditions <- function(default_message, .env, embraced_exprs, ...) {
   # -- a precondition failed, need detailed diagnostics for each condition
@@ -28,7 +28,7 @@ diagnose_failed_conditions <- function(default_message, .env, embraced_exprs, ..
     condition_expr <- deembrace(conditions[[i]], function(expr) {
       embraced_exprs <<- c(embraced_exprs, expr)
     })
-    
+
     # format embraced expressions along with their values
     details <- map_chr(embraced_exprs, function(expr) {
       value <- tryCatch(

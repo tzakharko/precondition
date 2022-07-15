@@ -48,15 +48,48 @@ test_that("assertion message works in precondition()", {
   expect_snapshot(fun(0L), error = TRUE)
 })
 
-test_that("assertion message works in postcondition()", {  
+test_that("multiple assertion messages work in precondition()", {
   fun <- function(x) {
-    postcondition(.value. > 0)
+    precondition(
+      "x must be a positive int", is.integer(x), x > 0L,
+      "x must be between 5 and 10", x >= 5, x <= 10
+    )
+
+    x
+  }
+
+  expect_silent(fun(10L))
+  expect_snapshot(fun(10.0), error = TRUE)
+  expect_snapshot(fun(0L), error = TRUE)
+  expect_snapshot(fun(3L), error = TRUE)
+  expect_snapshot(fun(11L), error = TRUE)
+})
+
+test_that("assertion message works in postcondition()", {
+  fun <- function(x) {
+    postcondition("return value must be positive", .value. > 0)
 
     x
   }
 
   expect_silent(fun(10))
   expect_snapshot(fun(0L), error = TRUE)
+})
+
+test_that("multiple assertion messages work in postcondition()", {
+  fun <- function(x) {
+    postcondition(
+      "return value must be positive", .value. > 0,
+      "return value must be between 5 and 10", .value. >= 5, .value. <= 10
+    )
+
+    x
+  }
+
+  expect_silent(fun(10))
+  expect_snapshot(fun(0), error = TRUE)
+  expect_snapshot(fun(3), error = TRUE)
+  expect_snapshot(fun(11), error = TRUE)
 })
 
 test_that("assertion message works in sanity_check()", {
@@ -70,6 +103,24 @@ test_that("assertion message works in sanity_check()", {
   expect_snapshot(fun(0L), error = TRUE)
 })
 
+
+
+test_that("multiple assertion messages work in sanity_check()", {
+  fun <- function(x) {
+    sanity_check(
+      "x must be a positive int", is.integer(x), x > 0L,
+      "x must be between 5 and 10", x >= 5, x <= 10
+    )
+
+    x
+  }
+
+  expect_silent(fun(10L))
+  expect_snapshot(fun(10.0), error = TRUE)
+  expect_snapshot(fun(0L), error = TRUE)
+  expect_snapshot(fun(3L), error = TRUE)
+  expect_snapshot(fun(11L), error = TRUE)
+})
 
 test_that("embracing works in precondition()", {
   fun <- function(x) {
