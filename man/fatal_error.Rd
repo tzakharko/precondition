@@ -4,14 +4,11 @@
 \alias{fatal_error}
 \title{Report a fatal error and terminate execution}
 \usage{
-fatal_error(message, call = parent.frame())
+fatal_error(message)
 }
 \arguments{
 \item{message}{the character vector containing the error message,
-can be formatted in the style of \href{https://rlang.r-lib.org/reference/format_error_bullets.html}{rlang::format_error_bullets}}
-
-\item{call}{either a function call or a call frame in which the error
-has occured}
+can be formatted in the style of \link[rlang:format_error_bullets]{rlang::format_error_bullets}}
 }
 \description{
 \code{fatal_error()} is similar to \link[base:stop]{base::stop}, except it bypasses
