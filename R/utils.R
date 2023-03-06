@@ -1,33 +1,16 @@
-# A safer version of all 
-#
-# Checks that all arguments are TRUE, silencing errors and warnings
-check_conditions <- function(...) {
-  .External2(ffi_check_conditions)
+unsafe_data_frame <- function(...) {
+  out <- list(...)
+  class(out) <- "data.frame"
+  rownames(out) <- if(length(out) > 0L) seq_along(out[[1L]]) else integer()
+
+  out
 }
 
-
-
-# [purr::map_chr]
-map_chr <- function(x, fun) {
-  vapply(x, fun, "")
+delayedAssign0 <- function(name, expr, eval_env = parent.frame(), assign_env = parent.frame()) {
+  # force the parameter evaluation
+  assign_env <- assign_env
+  eval_env <- eval_env
+  
+  # execute delayedAssign with expression substituted
+  eval(bquote(delayedAssign(name, .(expr), eval.env = eval_env, assign.env = assign_env)))
 }
-
-
-# locate the call associated with an environment
-find_call <- function(call_or_env) {
-  if(is.call(call_or_env)) return(call_or_env)
-
-  if(is.environment(call_or_env)) {
-    i <- sys.nframe() - 1L
-    while(i > 0L) {
-      if(identical(sys.frame(i), call_or_env)) {
-        return(sys.call(i))
-      }
-
-      i <- i - 1L
-    }
-  }
-
-  NULL
-}
-
