@@ -14,3 +14,12 @@ delayedAssign0 <- function(name, expr, eval_env = parent.frame(), assign_env = p
   # execute delayedAssign with expression substituted
   eval(bquote(delayedAssign(name, .(expr), eval.env = eval_env, assign.env = assign_env)))
 }
+
+get_package_name <- function(env) {
+  env <- topenv(env)
+  if(isNamespace(env)) {
+    getNamespaceName(env)
+  } else {
+    ""
+  }
+}

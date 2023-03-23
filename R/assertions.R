@@ -48,7 +48,7 @@
 #' in a meaningful way. Pre- and postconditions explicitly state the contract
 #' of a function and make it easier to debug correct function usage. Note:
 #' `postcondition(check)` is similar to `on.exit(stopifnot(check))`, except
-#' that the postcondition will not be checked if an error occured during
+#' that the postcondition will not be checked if an error occurred during
 #' function execution. 
 #'
 #' A sanity check is an assertion that specifies a set of conditions that the
@@ -120,15 +120,34 @@ postcondition_hook <- function(...) {
 #' @export
 sanity_check <- function(...) {
   .External2(ffi_assert_all) || {
-    bullets <- c(
-      format_diagnostic_message("sanity check failure", environment()$.diagnostics),
-      "",
-      "i" = "Failed an internal sanity check", 
-      "i" = "Please consider submitting a bug report"
-    )
+    bullets <- format_diagnostic_message("sanity check failure", environment()$.diagnostics)
+
+    # add a notice if the failure happened inside a package
+
+    
+    if((pkg <- get_package_name(parent.frame())) != "")  {
+      bullets <- c(
+        bullets, 
+        "",
+        "!" = sprintf("Failed an internal sanity check in package '%s'", pkg),
+        "!" = "Please consider submitting a bug report"
+      )
+    } else {
+      bullets <- c(
+        bullets, 
+        "",
+        "!" = "Failed an internal sanity check"
+      )      
+    }
 
     fatal_error(bullets)
 
     FALSE
   }
 }
+
+
+aaa <- function() {
+  sanity_check(0 > 5)
+}
+

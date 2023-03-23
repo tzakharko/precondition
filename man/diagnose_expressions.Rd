@@ -16,11 +16,11 @@ diagnose_expressions(..., .env)
 a data frame with diagnostic information
 }
 \description{
-Assertions in the \code{precondition} package support debug markers
-to provide user-friendly failure diagnostics. The low-level diagnostic
-machinery is implemented by \code{diagnose_expressions()}. Advanced users
-can make use of this function in their own code or when implementing
-custom assertion helpers (see \code{\link[=diagnose_assertion_failure]{diagnose_assertion_failure()}}).
+Assertions in the \code{precondition} package support debug markers to provide
+user-friendly assertion failure diagnosis. The low-level diagnostic
+machinery is implemented by \code{diagnose_expressions()}. Advanced users can
+make use of this function in their own code or when implementing custom
+assertion helpers (see \code{\link[=diagnose_assertion_failure]{diagnose_assertion_failure()}}).
 
 Use single curly braces \code{{x}} to mark expressions of interest and make them
 appear as separate entries in the diagnostic output. Use double curly braces
@@ -48,7 +48,7 @@ expression(either supplied as an argument or marked via \code{{}}) and three
 columns. The column \code{expr} is a list of diagnosed expressions, with debug
 markers processed and substituted. The column \code{eval_result} is a list of
 evaluated results for each diagnosed expressions. The column \code{is_error} is a
-logical vector where value of \code{TRUE} indicates that an error occured when
+logical vector where value of \code{TRUE} indicates that an error occurred when
 evaluating the respective expression. In this case the corresponding value
 of \code{eval_result} will capture the error condition.
 

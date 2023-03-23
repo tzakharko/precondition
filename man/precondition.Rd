@@ -59,7 +59,7 @@ postcondition is an assertion that must be true if a function has executed
 in a meaningful way. Pre- and postconditions explicitly state the contract
 of a function and make it easier to debug correct function usage. Note:
 \code{postcondition(check)} is similar to \code{on.exit(stopifnot(check))}, except
-that the postcondition will not be checked if an error occured during
+that the postcondition will not be checked if an error occurred during
 function execution.
 
 A sanity check is an assertion that specifies a set of conditions that the

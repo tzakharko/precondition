@@ -1,5 +1,6 @@
 # don't show complex backtraces as it will mess with tests
 options(rlang_backtrace_on_error = "none")
+options(fatal_error_action = "none")
 
 test_that("precondition() works as expected", {
   fun <- function(x) {
@@ -32,6 +33,8 @@ test_that("sanity_check() works as expected", {
 
     x
   }
+
+  
 
   expect_silent(fun(10L))
   capture.output(expect_error(fun(10.0)))
@@ -147,7 +150,7 @@ test_that("sanity_check() produces expected diagnostics with custom messages", {
 
     x
   }
-
+  
   expect_silent(fun(10L))
   expect_snapshot(fun(10.0), error = TRUE)
   expect_snapshot(fun(0L), error = TRUE)

@@ -50,7 +50,7 @@
 
     Code
       fun(10)
-    Output
+    Condition
       Error in `fatal_error()`:
       ! sanity check failure
       * `is.integer(x)` is not TRUE
@@ -59,19 +59,16 @@
         x                num 10
       
       
-      i Failed an internal sanity check
-      i Please consider submitting a bug report
+      ! Failed an internal sanity check in package 'precondition'
+      ! Please consider submitting a bug report
       
-      x fatal error, terminating!
-    Condition
-      Error in `fatal_error()`:
-      ! fatal_error
+      x fatal error
 
 ---
 
     Code
       fun(0L)
-    Output
+    Condition
       Error in `fatal_error()`:
       ! sanity check failure
       * `x > 0L` is not TRUE
@@ -80,13 +77,10 @@
         x         int 0
       
       
-      i Failed an internal sanity check
-      i Please consider submitting a bug report
+      ! Failed an internal sanity check in package 'precondition'
+      ! Please consider submitting a bug report
       
-      x fatal error, terminating!
-    Condition
-      Error in `fatal_error()`:
-      ! fatal_error
+      x fatal error
 
 # precondition() produces expected diagnostics on error
 
@@ -97,7 +91,7 @@
       ! precondition failure
       * `stop("error here!")` has produced an error
         
-        stop("error here!")    <error error here!>
+        stop("error here!")    <error: error here!>
       
       i note: error occured when evaluating the condition
 
@@ -134,7 +128,7 @@
       ! postcondition failure
       * `stop("error here!")` has produced an error
         
-        stop("error here!")    <error error here!>
+        stop("error here!")    <error: error here!>
       
       i note: error occured when evaluating the condition
 
@@ -166,28 +160,25 @@
 
     Code
       fun(10L)
-    Output
+    Condition
       Error in `fatal_error()`:
       ! sanity check failure
       * `stop("error here!")` has produced an error
         
-        stop("error here!")    <error error here!>
+        stop("error here!")    <error: error here!>
       
       i note: error occured when evaluating the condition
       
-      i Failed an internal sanity check
-      i Please consider submitting a bug report
+      ! Failed an internal sanity check in package 'precondition'
+      ! Please consider submitting a bug report
       
-      x fatal error, terminating!
-    Condition
-      Error in `fatal_error()`:
-      ! fatal_error
+      x fatal error
 
 ---
 
     Code
       fun(10)
-    Output
+    Condition
       Error in `fatal_error()`:
       ! sanity check failure
       * `is.integer(x)` is not TRUE
@@ -196,19 +187,16 @@
         x                num 10
       
       
-      i Failed an internal sanity check
-      i Please consider submitting a bug report
+      ! Failed an internal sanity check in package 'precondition'
+      ! Please consider submitting a bug report
       
-      x fatal error, terminating!
-    Condition
-      Error in `fatal_error()`:
-      ! fatal_error
+      x fatal error
 
 ---
 
     Code
       fun(0L)
-    Output
+    Condition
       Error in `fatal_error()`:
       ! sanity check failure
       * `x > 0L` is not TRUE
@@ -217,13 +205,10 @@
         x         int 0
       
       
-      i Failed an internal sanity check
-      i Please consider submitting a bug report
+      ! Failed an internal sanity check in package 'precondition'
+      ! Please consider submitting a bug report
       
-      x fatal error, terminating!
-    Condition
-      Error in `fatal_error()`:
-      ! fatal_error
+      x fatal error
 
 # precondition() produces expected diagnostics with custom messages
 
@@ -277,7 +262,7 @@
 
     Code
       fun(10)
-    Output
+    Condition
       Error in `fatal_error()`:
       ! sanity check failure
       * `x` is int
@@ -286,19 +271,16 @@
         x                num 10
       
       
-      i Failed an internal sanity check
-      i Please consider submitting a bug report
+      ! Failed an internal sanity check in package 'precondition'
+      ! Please consider submitting a bug report
       
-      x fatal error, terminating!
-    Condition
-      Error in `fatal_error()`:
-      ! fatal_error
+      x fatal error
 
 ---
 
     Code
       fun(0L)
-    Output
+    Condition
       Error in `fatal_error()`:
       ! sanity check failure
       * `x` is positive
@@ -307,11 +289,8 @@
         x         int 0
       
       
-      i Failed an internal sanity check
-      i Please consider submitting a bug report
+      ! Failed an internal sanity check in package 'precondition'
+      ! Please consider submitting a bug report
       
-      x fatal error, terminating!
-    Condition
-      Error in `fatal_error()`:
-      ! fatal_error
+      x fatal error
 

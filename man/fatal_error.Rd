@@ -2,24 +2,39 @@
 % Please edit documentation in R/errors.R
 \name{fatal_error}
 \alias{fatal_error}
-\title{Report a fatal error and terminate execution}
+\alias{precondition_fatal_error_action}
+\title{Signal a fatal error (and optionally terminate the program execution)}
 \usage{
-fatal_error(message)
+fatal_error(bullets, ...)
 }
 \arguments{
-\item{message}{the character vector containing the error message,
-can be formatted in the style of \link[rlang:format_error_bullets]{rlang::format_error_bullets}}
+\item{bullets}{a character vector containing the error message,
+can be formatted in the style of \code{\link[rlang:format_error_bullets]{rlang::format_error_bullets()}}}
+
+\item{...}{reserved for future use}
 }
 \description{
-\code{fatal_error()} is similar to \link[base:stop]{base::stop}, except it bypasses
-the error handling mechanism and will always immediately terminate
-the program. Use this function to report critical execution errors,
-where recovery is impossible or unfeasible.
+\code{fatal_error()} is equivalent to the base function \code{\link[base:stop]{base::stop()}},
+except it is intended to signal critical errors where recovery
+is impossible or unfeasible.
+
+Fatal errors are signaled via \code{\link[rlang:abort]{rlang::abort()}} with the class
+\code{precondition/fatal_error}. The option \code{fatal_error_action} controls
+the behavior of the fatal errors.
+\itemize{
+\item \code{option(fatal_error_action = "inform")} will display a
+warning if a fatal error has been prevented from bubbling up to the #
+user(either via `tryCatch() or some other error handling mechanism). This
+is the default setting and will draw user's attention to a fatal error
+occurring.
+\item \code{option(fatal_error_action = "none")} will make fatal errors
+behave like regular R error conditions. Use this if your code contains custom
+logic for handling fatal errors.
+\item \code{option(fatal_error_action = 'terminate')} will immediately
+the program execution without saving the workspace or running finalizers
+when a fatal error occurs.
+}
 }
 \details{
-In the interactive mode, \code{fatal_error()} will exit to the interpreter prompt.
-In a script, it will terminate execution using \link[base:quit]{base::quit}
-
-\code{fatal_error()} is used by \link{sanity_check} to immediately terminate execution
-when a critical assertion in program logic has failed.
+\code{fatal_error()} is used in \code{\link[=sanity_check]{sanity_check()}} to report critical assertion failures.
 }

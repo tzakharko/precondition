@@ -118,8 +118,8 @@ sanity_check(is.data.frame({x}))
 
 ## Detailed overview
 
-Programs almost always rely on implicit assumptions, randing from simple ones like "this function 
-argument is a non-empty string" to more involved ones like "my algorithm should produce a sorted 
+Programs almost always rely on implicit assumptions, from simple ones like "this function 
+argument is a non-empty string", to more involved ones like "my algorithm should produce a sorted 
 vector". If these assumptions are broken, either due to a bug in the code or some unexpected 
 input, the program will not behave as expected. Sometimes this will result in a runtime error 
 message, but quite often the execution will continue, producing nonsensical values and behavior 
@@ -190,7 +190,7 @@ Note that diagnostic messages must be string literals! Any non-literal expressio
 evaluates to a string will be interpreted as an assertion and will fail (since assertions
 must evaluate to `TRUE`). 
 
-The diagnosic machinery is implemented using the low-level function `diagnose_expressions()`
+The diagnostic machinery is implemented using the low-level function `diagnose_expressions()`
 (see documentation). 
 
 ## Advanced customization and assertion helpers
@@ -239,13 +239,13 @@ the actual variable we are checking inside `is_positive_int()`). This is done vi
 diagnostic marker `{{ }}`, which specifies that a function argument is being forwarded from
 the parent function and should be replaced by parent's argument name in the diagnosis. This 
 is functionally similar and follows the same syntactic convention as the 
-[embrace operator](https://rlang.r-lib.org/reference/embrace-operator.html) in tidyverse.  
+[embrace operator](https://rlang.r-lib.org/reference/embrace-operator.html) in `tidyverse`.  
 
 ## Alternatives
 
  - Base R offers [`stopifnot()`](https://stat.ethz.ch/R-manual/R-devel/library/base/html/stopifnot.html) for assertion checking.
 
- - The package [`assertthat`](https://cran.r-project.org/web/packages/assertthat/index.html) is a comprehensive framework for building assertion predicates that produce rich custom 
+ - The package [`assertthat`](https://CRAN.R-project.org/package=assertthat) is a comprehensive framework for building assertion predicates that produce rich custom 
  diagnostics. `precondition` follows a different design philosophy that focuses on 
  simplicity and low runtime overhead. 
  

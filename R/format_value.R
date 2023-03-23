@@ -25,7 +25,10 @@ format_value.error <- function(x, max_width = 40L) {
   msg <- gsub("(^\\s+)|(\\s+$)", "", msg)
 
   msg <- str_trim(msg, max_width)
-  sprintf("<error %s>", msg)
+  class <- class(x)[[1L]]
+  if(class == "simpleError") class <- "error"
+
+  sprintf("<%s: %s>", class, msg)
 }
 
 

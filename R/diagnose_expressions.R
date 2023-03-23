@@ -43,7 +43,7 @@
 #' columns. The column `expr` is a list of diagnosed expressions, with debug
 #' markers processed and substituted. The column `eval_result` is a list of
 #' evaluated results for each diagnosed expressions. The column `is_error` is a
-#' logical vector where value of `TRUE` indicates that an error occured when
+#' logical vector where value of `TRUE` indicates that an error occurred when
 #' evaluating the respective expression. In this case the corresponding value
 #' of `eval_result` will capture the error condition.
 #'

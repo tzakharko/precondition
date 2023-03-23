@@ -2,17 +2,6 @@
 #include <assert.h>
 
 
-SEXP ffi_make_promise(SEXP expr, SEXP env) {
-  SEXP promise = PROTECT(Rf_allocSExp(PROMSXP));
-  SET_PRCODE(promise, expr);
-  SET_PRENV(promise, env);
-  SET_PRVALUE(promise, R_UnboundValue);
-  UNPROTECT(1);
-
-  return promise;
-}
-
-
 static  SEXP context_frame = NULL;
 
 SEXP ffi_get_context_frame() {
@@ -143,11 +132,10 @@ SEXP ffi_assert_all(SEXP call, SEXP op, SEXP args, SEXP frame) {
   return Rf_ScalarLogical(1);
 }
 
+
 static const R_CallMethodDef call_ffi_funcs[] = {
-  {"ffi_make_promise",  (DL_FUNC) &ffi_make_promise, 2},
   {"ffi_get_context_frame",  (DL_FUNC) &ffi_get_context_frame, 0},
   
-
   {NULL, NULL, 0}
 };
 
