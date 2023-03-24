@@ -1,3 +1,4 @@
 ^LICENSE\.md$
 run.R
 ^\.github$
+^cran-comments\.md$
