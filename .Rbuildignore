@@ -2,3 +2,6 @@
 run.R
 ^\.github$
 ^cran-comments\.md$
+src/*.o
+src/*.so
+..Rcheck

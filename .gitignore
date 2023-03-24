@@ -3,3 +3,8 @@
 .Rdata
 .httr-oauth
 .DS_Store
+run.R
+src/*.o
+src/*.so
+cran-comments.md
+..Rcheck
