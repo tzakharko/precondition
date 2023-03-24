@@ -58,7 +58,7 @@ fatal_error <- function(bullets, ...) {
         # display the error and an informative message
         suffix <- rlang::format_error_bullets(fatal_error_handled_info)
         error$message <- paste0(error$message, "\n\n", suffix)
-        writeLines(con = get_error_con(), format(error))
+        writeLines(con = get_error_con(), format_rlang_error(error))
       }
     })
   }
@@ -96,7 +96,7 @@ get_fatal_error_action <- function() {
       suffix <- rlang::format_error_bullets(c("x" = "fatal error, execution halted"))
       error$message <- paste0(error$message, "\n\n", suffix)
 
-      writeLines(con = get_error_con(), format(error))
+      writeLines(con = get_error_con(), format_rlang_error(error))
 
       # exit to top in interactive mode, quit with error in script mode
       if(interactive()) {
@@ -120,6 +120,14 @@ get_fatal_error_action <- function() {
 
     NULL
   }
+}
+
+format_rlang_error <- function(error) {
+  backtrace_opt <- getOption("rlang_backtrace_on_error", "full")
+  backtrace <- !rlang::is_string(backtrace_opt, "none")
+  simplify <- if(rlang::is_string(backtrace_opt, "branch")) "branch" else "none"
+
+  format(error, backtrace = backtrace, simplify = simplify)
 }
 
 get_error_con <- function() {

@@ -26,9 +26,6 @@
       
       i use `option(fatal_error_action = "none")` to silence this message
       i see ?precondition_fatal_error_action
-      ---
-      Backtrace:
-       1. precondition::fatal_error(c("error", "with", "bullets", "", i = "and notes"))
 
 # fatal_error() produces a note inside tryCatch() when fatal_error_action = NULL
 
@@ -50,10 +47,6 @@
       
       i use `option(fatal_error_action = "none")` to silence this message
       i see ?precondition_fatal_error_action
-      ---
-      Backtrace:
-       1. base::tryCatch(...)
-       5. precondition::fatal_error(c("error", "with", "bullets", "", i = "and notes"))
       NULL
 
 # fatal_error() produces expected output with fatal_error_action = 'info'
@@ -88,9 +81,6 @@
       
       i use `option(fatal_error_action = "none")` to silence this message
       i see ?precondition_fatal_error_action
-      ---
-      Backtrace:
-       1. precondition::fatal_error(c("error", "with", "bullets", "", i = "and notes"))
 
 # fatal_error() produces a note inside tryCatch() when fatal_error_action = 'info'
 
@@ -117,10 +107,6 @@
       
       i use `option(fatal_error_action = "none")` to silence this message
       i see ?precondition_fatal_error_action
-      ---
-      Backtrace:
-       1. base::tryCatch(...)
-       5. precondition::fatal_error(c("error", "with", "bullets", "", i = "and notes"))
       NULL
 
 # fatal_error() produces expected output with fatal_error_action = 'none'
@@ -151,9 +137,6 @@
       i and notes
       
       x fatal error, execution halted
-      ---
-      Backtrace:
-       1. precondition::fatal_error(c("error", "with", "bullets", "", i = "and notes"))
     Condition
       Error in `quit()`:
       ! quit() called
@@ -176,10 +159,6 @@
       i and notes
       
       x fatal error, execution halted
-      ---
-      Backtrace:
-       1. base::tryCatch(...)
-       5. precondition::fatal_error(c("error", "with", "bullets", "", i = "and notes"))
     Condition
       Error in `quit()`:
       ! quit() called

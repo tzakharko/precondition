@@ -63,7 +63,7 @@ test_that("fatal_error() calls quit() when when fatal_error_action = 'terminate'
   withr::local_options(fatal_error_action = 'terminate')
   
   local_mocked_bindings(quit = function(...) {
-    rlang::abort("quit() called", class="modular/quit_action")
+    rlang::abort("quit() called", class="modular/quit_action", trace = NULL)
   }, .package = "base")
 
   expect_snapshot(fatal_error(c("error", "with", "bullets", "", "i" = "and notes")), error = TRUE)
@@ -75,7 +75,7 @@ test_that("fatal_error() calls quit() inside tryCatch() when when fatal_error_ac
   withr::local_options(fatal_error_action = 'terminate')
 
   local_mocked_bindings(quit = function(...) {
-    rlang::abort("quit() called", class="modular/quit_action")
+    rlang::abort("quit() called", class="modular/quit_action", trace = NULL)
   }, .package = "base")
 
   expect_snapshot(tryCatch(
