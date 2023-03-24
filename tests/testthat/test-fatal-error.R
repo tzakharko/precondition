@@ -26,13 +26,13 @@ test_that("fatal_error() produces a note inside tryCatch() when fatal_error_acti
 
 
 test_that("fatal_error() produces expected output with fatal_error_action = 'info'", {
-  withr::local_options(fatal_error_action = 'info')
+  withr::local_options(fatal_error_action = 'inform')
 
   expect_snapshot(fatal_error(c("error", "with", "bullets", "", "i" = "and notes")), error = TRUE)
 })
 
 test_that("fatal_error() produces a note inside tryCatch() when fatal_error_action = 'info'", {
-  withr::local_options(fatal_error_action = 'info')
+  withr::local_options(fatal_error_action = 'inform')
 
   expect_snapshot(tryCatch(
     fatal_error(c("error", "with", "bullets", "", "i" = "and notes")),

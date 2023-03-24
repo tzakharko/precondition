@@ -54,10 +54,6 @@
     Code
       fatal_error(c("error", "with", "bullets", "", i = "and notes"))
     Condition
-      Warning:
-      invalid `options(fatal_error_action = 'info')`
-      i supported values are 'inform', 'none', or 'terminate'
-      i see `?precondition_fatal_error_action` for more information
       Error in `fatal_error()`:
       ! error
       with
@@ -87,11 +83,6 @@
     Code
       tryCatch(fatal_error(c("error", "with", "bullets", "", i = "and notes")),
       error = function(...) NULL)
-    Condition
-      Warning:
-      invalid `options(fatal_error_action = 'info')`
-      i supported values are 'inform', 'none', or 'terminate'
-      i see `?precondition_fatal_error_action` for more information
     Output
       <error/precondition/fatal_error>
       Error in `fatal_error()`:
