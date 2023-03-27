@@ -4,7 +4,7 @@
 
 static  SEXP context_frame = NULL;
 
-SEXP ffi_get_context_frame() {
+SEXP ffi_get_context_frame(void) {
   return context_frame == NULL ? R_NilValue : context_frame;
 }
 
@@ -85,36 +85,6 @@ SEXP ffi_assert_all(SEXP call, SEXP op, SEXP args, SEXP frame) {
     SEXP result = R_tryEvalSilent(arg, R_EmptyEnv, NULL);
 
     if(result == NULL || !IS_SCALAR(result, LGLSXP) || LOGICAL(result)[0] != 1) {
-      // // if diagnostics has been performed, we stop
-      // if(Rf_findVarInFrame(frame, install(".diagnostics")) != R_UnboundValue) {
-      //   return Rf_ScalarLogical(0);
-      // }
-
-      // // debug the expressin
-      // SEXP dbg_fun = PROTECT(Rf_findFun(install("debug_expressions"), frame));
-      // SEXP dbg_tbl = R_tryEval(PROTECT(Rf_lang2(dbg_fun, assertion_info.expr)), assertion_info.expr_env, NULL);
-
-      // // check that debug_expressions does not fail
-      // if(dbg_tbl == NULL) {
-      //   context_frame = assertion_info.prev_context_frame;
-      //   error("internal error");
-      // } 
-      // dbg_tbl = PROTECT(dbg_tbl);
-
-      // // build the diagnose call
-      // SEXP diagnostics_call = PROTECT(Rf_lang3(
-      //   install("diagnose_condition_failure"),
-      //   PROTECT(Rf_lang3(install("make_default_message"), assertion_info.message, dbg_tbl)),
-      //   dbg_tbl
-      // ));
-      // SET_TAG(CDDR(diagnostics_call), install("debug_table"));
-      // R_tryEval(diagnostics_call, frame, NULL);
-
-      // UNPROTECT(5);
-
-      // // otherwise we have an error!
-      // context_frame = assertion_info.prev_context_frame;
-
       // diagnose the failure with context cleanup
       R_ExecWithCleanup(
         (SEXP (*)(void *))&diagnose_assertion_failure, 
