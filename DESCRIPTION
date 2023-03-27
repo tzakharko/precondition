@@ -1,5 +1,5 @@
 Package: precondition
-Title: Lightweight Precondition, Postcondition, and Sanity Checks (aka. Assertions) for R 
+Title: Lightweight Precondition, Postcondition, and Sanity Checks
 Version: 0.1.0
 Authors@R: 
     person("Taras", "Zakharko", , "taras.zakharko@gmail.com", role = c("aut", "cre"),

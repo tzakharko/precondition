@@ -1,4 +1,4 @@
-# precondition (0.1.0)
+# precondition 0.1.0
 
 This is the initial release, implementing three types of assertion checks:
 
